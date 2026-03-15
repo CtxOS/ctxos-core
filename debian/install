@@ -1,6 +1,7 @@
 etc/apt/preferences.d/ctx-pinning etc/apt/preferences.d/
 bin/ctx-update usr/bin/
 bin/ctx-about usr/bin/
+bin/ctx-dev-setup usr/bin/
 etc/NetworkManager/conf.d/ctxos.conf etc/NetworkManager/conf.d/
 etc/apt/apt.conf.d/99ctx-options etc/apt/apt.conf.d/
 etc/apt/apt.conf.d/99ctx-timeout etc/apt/apt.conf.d/
