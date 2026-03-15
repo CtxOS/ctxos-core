@@ -17,6 +17,20 @@ case "$1" in
             systemctl restart smbd 2>/dev/null || true
             systemctl restart nmbd 2>/dev/null || true
         fi
+        
+        if [ -d /etc/postgresql ]; then
+            for conf in /etc/postgresql/*/main/postgresql.conf; do
+                if [ -f "$conf" ] && ! grep -q "ctx_postgresql.conf" "$conf"; then
+                    echo "include = '/etc/postgresql/ctx_postgresql.conf'" >> "$conf"
+                fi
+            done
+            if id -u postgres >/dev/null 2>&1; then
+                chown postgres:postgres /etc/postgresql/ctx_postgresql.conf 2>/dev/null || true
+                chown postgres:postgres /etc/postgresql/postgresql_reduce_shared_buffers 2>/dev/null || true
+                chmod 644 /etc/postgresql/ctx_postgresql.conf 2>/dev/null || true
+            fi
+            systemctl restart postgresql 2>/dev/null || true
+        fi
         ;;
     abort-upgrade|abort-remove|abort-deconfigure)
         ;;

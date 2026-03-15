@@ -19,6 +19,8 @@ etc/os-release etc/
 etc/profile.d/ctxos-env.sh etc/profile.d/
 etc/profile.d/ctxos-history.sh etc/profile.d/
 etc/resolv.conf.head etc/
+etc/postgresql/ctx_postgresql.conf etc/postgresql/
+etc/postgresql/postgresql_reduce_shared_buffers etc/postgresql/
 etc/samba/smb.conf etc/samba/
 etc/skel/.bashrc etc/skel/
 etc/skel/.profile etc/skel/
