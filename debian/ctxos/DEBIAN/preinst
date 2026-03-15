@@ -1,0 +1,19 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    install)
+        echo "Installing CtxOS..."
+        ;;
+    upgrade)
+        echo "Upgrading CtxOS..."
+        ;;
+    abort-upgrade)
+        echo "Aborting CtxOS upgrade..."
+        ;;
+    *)
+        exit 1
+        ;;
+esac
+
+exit 0
