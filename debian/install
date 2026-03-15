@@ -19,5 +19,11 @@ etc/os-release etc/
 etc/profile.d/ctxos-env.sh etc/profile.d/
 etc/profile.d/ctxos-history.sh etc/profile.d/
 etc/resolv.conf.head etc/
+etc/skel/.zshrc etc/skel/
+etc/skel/.vimrc etc/skel/
+etc/vim/vimrc.local etc/vim/
+etc/zsh/zshrc etc/zsh/
+usr/share/ctxos/defaults/zshrc usr/share/ctxos/defaults/
+usr/share/ctxos/defaults/vimrc usr/share/ctxos/defaults/
 usr/share/ctxos/skel/.config/fish/config.fish etc/skel/.config/fish/
 lib/systemd/system/ctxos-dns.service lib/systemd/system/
