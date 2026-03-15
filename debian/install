@@ -1,0 +1,3 @@
+bin/ctx-update usr/bin/
+etc/ usr/share/ctxos/
+lib/systemd/system/ctxos-dns.service lib/systemd/system/
