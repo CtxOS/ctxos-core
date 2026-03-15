@@ -30,3 +30,8 @@ export PATH="$HOME/bin:$HOME/.local/bin:/opt/ctxos/bin:$PATH"
 
 # Load global config if exists
 [ -f /etc/bash.bashrc ] && . /etc/bash.bashrc
+
+# Display CTX OS Info on login
+if [ -x /usr/bin/ctx-about ]; then
+    ctx-about
+fi

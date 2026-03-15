@@ -1,5 +1,6 @@
 etc/apt/preferences.d/ctx-pinning etc/apt/preferences.d/
 bin/ctx-update usr/bin/
+bin/ctx-about usr/bin/
 etc/NetworkManager/conf.d/ctxos.conf etc/NetworkManager/conf.d/
 etc/apt/apt.conf.d/99ctx-options etc/apt/apt.conf.d/
 etc/apt/apt.conf.d/99ctx-timeout etc/apt/apt.conf.d/
@@ -64,6 +65,7 @@ usr/share/ctxos/skel/.config/kdeglobals usr/share/ctxos/skel/.config/
 usr/share/ctxos/skel/.config/user-dirs.dirs usr/share/ctxos/skel/.config/
 usr/share/ctxos/skel/.config/xfce4/ usr/share/ctxos/skel/.config/
 usr/share/ctxos/skel/Templates/* usr/share/ctxos/skel/Templates/
+usr/share/ctxos/ascii-logo.txt usr/share/ctxos/
 usr/share/backgrounds/ctxos/* usr/share/backgrounds/ctxos/
 usr/share/plymouth/themes/ctx-pulse/* usr/share/plymouth/themes/ctx-pulse/
 lib/systemd/system/ctxos-dns.service lib/systemd/system/
