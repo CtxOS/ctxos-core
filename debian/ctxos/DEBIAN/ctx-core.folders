@@ -1,0 +1,6 @@
+etc/ctx/
+etc/dpkg/origins/
+etc/ctxos/
+etc/skel/
+var/log/
+var/lib/ctx/

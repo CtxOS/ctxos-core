@@ -1,0 +1,13 @@
+etc/ctx/debian_version
+etc/dpkg/origins/ctx
+etc/os-release
+etc/lsb-release
+etc/issue
+etc/issue.net
+etc/motd
+etc/resolv.conf.head
+etc/ctxos/dnsmasq.conf
+etc/bash.bashrc
+etc/skel/
+root/.bashrc
+usr/bin/ctx-update
