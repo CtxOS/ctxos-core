@@ -30,6 +30,14 @@ case "$1" in
             fi
         fi
 
+        # 2.1. Plymouth: Set boot splash theme
+        if [ -x "/usr/sbin/plymouth-set-default-theme" ]; then
+            if [ -d "/usr/share/plymouth/themes/ctx-pulse" ]; then
+                plymouth-set-default-theme ctx-pulse >/dev/null 2>&1 || true
+                update-initramfs -u >/dev/null 2>&1 || true
+            fi
+        fi
+
         # 3. Hardware: Reload Udev rules for HyperFIDO
         if [ -x "/usr/bin/udevadm" ]; then
             udevadm control --reload-rules || true

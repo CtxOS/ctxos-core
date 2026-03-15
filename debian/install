@@ -59,4 +59,6 @@ usr/share/ctxos/skel/.config/kdeglobals usr/share/ctxos/skel/.config/
 usr/share/ctxos/skel/.config/user-dirs.dirs usr/share/ctxos/skel/.config/
 usr/share/ctxos/skel/.config/xfce4/ usr/share/ctxos/skel/.config/
 usr/share/ctxos/skel/Templates/* usr/share/ctxos/skel/Templates/
+usr/share/backgrounds/ctxos/* usr/share/backgrounds/ctxos/
+usr/share/plymouth/themes/ctx-pulse/* usr/share/plymouth/themes/ctx-pulse/
 lib/systemd/system/ctxos-dns.service lib/systemd/system/
