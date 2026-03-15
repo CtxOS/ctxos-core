@@ -16,6 +16,7 @@ Depends:
     grep
 Recommends:
     plasma-systemmonitor,
+    powershell,
     xfce4,
     xfce4-terminal,
     xfce4-taskmanager,
