@@ -67,6 +67,11 @@ case "$1" in
         if [ -x "/usr/bin/update-desktop-database" ]; then
             update-desktop-database -q
         fi
+
+        # 8. Update dconf database for system-wide GNOME settings
+        if [ -x "/usr/bin/dconf" ]; then
+            dconf update || true
+        fi
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

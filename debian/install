@@ -8,6 +8,8 @@ etc/apt/apt.conf.d/99retry-on-error etc/apt/apt.conf.d/
 etc/apt/sources.list.d/ctx.list etc/apt/sources.list.d/
 etc/ctx/debian_version etc/ctx/
 etc/cloud/cloud.cfg.d/ctx.cfg etc/cloud/cloud.cfg.d/
+etc/dconf/db/local.d/00-ctxos-settings etc/dconf/db/local.d/
+etc/dconf/profile/user etc/dconf/profile/
 etc/dnsmasq.d/ctxos.conf etc/dnsmasq.d/
 etc/dpkg/dpkg.cfg.d/ctxos etc/dpkg/dpkg.cfg.d/
 etc/dpkg/origins/ctx etc/dpkg/origins/
