@@ -19,6 +19,7 @@ etc/os-release etc/
 etc/profile.d/ctxos-env.sh etc/profile.d/
 etc/profile.d/ctxos-history.sh etc/profile.d/
 etc/resolv.conf.head etc/
+etc/udev/rules.d/50-u2f-hyperfido.rules etc/udev/rules.d/
 etc/X11/Xsession.d/52noautomount etc/X11/Xsession.d/
 etc/xrdp/xrdp.ini etc/xrdp/
 etc/postgresql/ctx_postgresql.conf etc/postgresql/

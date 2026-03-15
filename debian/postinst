@@ -5,6 +5,11 @@ case "$1" in
     configure)
         mkdir -p /etc/ctxos
         
+        if [ -x "/usr/bin/udevadm" ]; then
+            udevadm control --reload-rules 2>/dev/null || true
+            udevadm trigger 2>/dev/null || true
+        fi
+        
         if [ ! -d /home/public ]; then
             mkdir -p /home/public
             chmod 777 /home/public
