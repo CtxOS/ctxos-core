@@ -7,6 +7,7 @@ CTXOS_DIVERT_LIST="
 /etc/issue
 /etc/issue.net
 /etc/motd
+/etc/ssl/openssl.cnf
 "
 
 case "$1" in
