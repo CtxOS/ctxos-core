@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+
+case "$1" in
+    configure)
+        mkdir -p /etc/ctxos
+        systemctl daemon-reload 2>/dev/null || true
+        systemctl enable ctxos-dns.service 2>/dev/null || true
+        ;;
+    abort-upgrade|abort-remove|abort-deconfigure)
+        ;;
+    *)
+        exit 1
+        ;;
+esac
+
+exit 0
