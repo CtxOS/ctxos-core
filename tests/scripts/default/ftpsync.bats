@@ -13,7 +13,7 @@ load helper
   [[ -s $BATS_TEST_OWN_OUTDIR/project/trace/localhost ]]
   [[ -s $BATS_TEST_OWN_OUTDIR/project/trace/master.example.com ]]
   grep 'Archive serial: 2017091804' $BATS_TEST_OWN_OUTDIR/project/trace/localhost
-  grep -v 'Trigger:' $BATS_TEST_OWN_OUTDIR/project/trace/localhost
+  ! grep -q 'Trigger:' $BATS_TEST_OWN_OUTDIR/project/trace/localhost
 }
 
 @test "run ftpsync, ssh command" {
