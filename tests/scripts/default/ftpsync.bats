@@ -30,12 +30,12 @@ load helper
   grep 'Trigger: ssh' $BATS_TEST_OWN_OUTDIR/project/trace/localhost
 }
 
-@test "run ftpsync with non-existant archive" {
+@test "run ftpsync with non-existent archive" {
   run bin/ftpsync sync:archive:
   [[ $status -eq 78 ]]
 }
 
-@test "run ftpsync with non-existant archive, ssh comman" {
+@test "run ftpsync with non-existent archive, ssh command" {
   SSH_ORIGINAL_COMMAND="sync:archive:" run bin/ftpsync
   [[ $status -eq 78 ]]
 }
