@@ -13,7 +13,7 @@ description: >
 
 # CtxOS Skill
 
-Manage [Ctxos](https://ctxos.org/) Linux systems - a beautiful, modern, opinionated Arch Linux distribution with Hyprland.
+Manage [Ctxos](https://ctxos.github.io/) Linux systems - a beautiful, modern, opinionated Arch Linux distribution with Hyprland.
 
 This skill is for end-user customization on installed systems.
 It is not for contributing to CtxOS source code.

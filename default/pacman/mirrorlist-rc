@@ -1,1 +1,1 @@
-Server = https://rc-mirror.ctxos.org/$repo/os/$arch
+Server = https://rc-mirror.ctxos.github.io/$repo/os/$arch

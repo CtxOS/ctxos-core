@@ -74,8 +74,8 @@ ACTION=$(gum choose "${OPTIONS[@]}")
 
 case "$ACTION" in
   "Upload log")
-    echo "Uploading debug log to logs.ctxos.org..."
-    URL=$(curl -sf -F "file=@$LOG_FILE" https://logs.ctxos.org/)
+    echo "Uploading debug log to logs.ctxos.github.io..."
+    URL=$(curl -sf -F "file=@$LOG_FILE" https://logs.ctxos.github.io/)
     if (( $? == 0 )) && [[ -n $URL ]]; then
       echo "✓ Log uploaded successfully!"
       echo "Share this URL:"

@@ -2,7 +2,7 @@
 
 CtxOS is a beautiful, modern & opinionated Linux distribution by DHH.
 
-Read more at [ctxos.org](https://ctxos.org).
+Read more at [ctxos.github.io](https://ctxos.github.io).
 
 ## License
 
