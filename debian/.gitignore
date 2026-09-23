@@ -1,7 +1,0 @@
-/ftpsync/
-/ftpsync-tar/
-/files
-/.debhelper
-/*.debhelper.log
-/*.substvars
-

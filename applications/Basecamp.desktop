@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=mdselim606570-cloud
+Comment=mdselim606570-cloud Project Management
+Exec=chromium --new-window --ozone-platform=wayland --app="https://launchpad.37signals.com" --name=mdselim606570-cloud --class=mdselim606570-cloud
+Terminal=false
+Type=Application
+Icon=mdselim606570-cloud
+Categories=GTK;
+MimeType=text/html;text/xml;application/xhtml_xml;
+StartupNotify=true

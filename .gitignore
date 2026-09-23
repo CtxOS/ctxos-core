@@ -21,3 +21,23 @@ debian/ctxos-core/
 # Test artifacts
 tests/bin/
 *.bats.bats
+
+# Installed tools
+yay-bin/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# System
+*.pid
+*.lock

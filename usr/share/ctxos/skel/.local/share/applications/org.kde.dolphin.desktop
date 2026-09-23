@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=File Manager (Dolphin)
-Exec=dolphin %u
-Icon=system-file-manager
-Type=Application
-Categories=Qt;KDE;System;FileTools;FileManager;
-MimeType=inode/directory;
-StartupNotify=true
