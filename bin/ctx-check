@@ -1,0 +1,95 @@
+#!/bin/bash
+# CTX OS System Health Check
+# Performs a series of checks on the CTX OS system to verify health and status.
+
+set -euo pipefail
+
+EXIT_CODE=0
+
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
+}
+
+check_pass() {
+    echo "  PASS: $1"
+}
+
+check_fail() {
+    echo "  FAIL: $1" >&2
+    EXIT_CODE=1
+}
+
+check_warn() {
+    echo "  WARN: $1"
+}
+
+check_command() {
+    if command -v "$1" &>/dev/null; then
+        check_pass "$1 is installed"
+    else
+        check_warn "$1 is not installed"
+    fi
+}
+
+check_disk() {
+    local threshold="${1:-90}"
+    local usage
+    usage=$(df / | awk 'NR==2{print $5}' | tr -d '%')
+    if [ "$usage" -gt "$threshold" ]; then
+        check_fail "Disk usage at ${usage}% exceeds ${threshold}% threshold"
+    else
+        check_pass "Disk usage at ${usage}% is within ${threshold}% threshold"
+    fi
+}
+
+check_memory() {
+    local threshold="${1:-90}"
+    local usage
+    usage=$(free | awk '/Mem:/ {printf "%.0f", $3/$2 * 100}')
+    if [ "$usage" -gt "$threshold" ]; then
+        check_fail "Memory usage at ${usage}% exceeds ${threshold}% threshold"
+    else
+        check_pass "Memory usage at ${usage}% is within ${threshold}% threshold"
+    fi
+}
+
+check_service() {
+    if systemctl is-active --quiet "$1" 2>/dev/null; then
+        check_pass "$1 is active"
+    else
+        check_warn "$1 is not active"
+    fi
+}
+
+echo "============================================"
+echo "  CTX OS Health Check"
+echo "============================================"
+echo ""
+
+log "Running system checks..."
+
+echo "--- System ---"
+check_command "apt-get"
+check_command "systemctl"
+check_command "bash"
+check_command "curl"
+
+echo ""
+echo "--- Resources ---"
+check_disk 90
+check_memory 90
+
+echo ""
+echo "--- Services ---"
+check_service "ssh"
+check_service "cron"
+check_service "rsyslog"
+
+echo ""
+if [ $EXIT_CODE -eq 0 ]; then
+    log "All health checks passed"
+else
+    log "Some health checks failed or had warnings"
+fi
+
+exit $EXIT_CODE

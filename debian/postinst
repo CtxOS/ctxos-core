@@ -55,9 +55,9 @@ case "$1" in
         chmod 644 /etc/apt/sources.list.d/ctx.list || true
 
         # 6. GPG key for CTX OS repository
-        # Note: GPG key should be included in the package (debian/install-root/usr/share/keyrings/)
-        # The key file should be placed at /usr/share/keyrings/ctxos-archive-key.gpg
-        if [ ! -f /usr/share/keyrings/ctxos-archive-key.gpg ] && [ ! -f /etc/apt/keyrings/ctxos-archive-key.gpg ]; then
+        if [ -f /usr/share/keyrings/ctxos-archive-key.gpg ]; then
+            chmod 644 /usr/share/keyrings/ctxos-archive-key.gpg
+        elif [ ! -f /etc/apt/keyrings/ctxos-archive-key.gpg ]; then
             echo "WARNING: CTX OS GPG key not found. Please install it manually."
         fi
 

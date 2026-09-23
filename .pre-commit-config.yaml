@@ -14,3 +14,9 @@ repos:
       - id: check-yaml
       - id: end-of-file-fixer
       - id: trailing-whitespace
+
+  - repo: https://github.com/pre-commit/mirrors-editorconfig
+    rev: v0.1.4
+    hooks:
+      - id: editorconfig-checker
+        files: \.(sh|bash|yml|yaml|md|conf|Makefile)$

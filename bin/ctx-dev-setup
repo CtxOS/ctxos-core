@@ -1,5 +1,8 @@
 #!/bin/bash
-# CTX OS Developer Setup Script
+# CTX OS Developer Setup
+# Sets up a complete development environment including Docker, Node.js, VS Code,
+# Python, and local HTTPS development certificates with a custom CA.
+
 set -euo pipefail
 
 echo "============================================"

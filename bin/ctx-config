@@ -1,0 +1,83 @@
+#!/bin/bash
+# CTX OS Configuration Manager
+# Reads and manages CTX OS configuration files.
+
+set -euo pipefail
+
+CONFIG_DIR="${CTX_CONFIG_DIR:-/etc/ctx}"
+
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
+}
+
+usage() {
+    echo "Usage: $(basename "$0") [COMMAND] [OPTIONS]"
+    echo ""
+    echo "Manage CTX OS configuration files."
+    echo ""
+    echo "Commands:"
+    echo "  show KEY      Show configuration value for KEY"
+    echo "  set KEY VALUE Set configuration value for KEY"
+    echo "  list          List all configuration values"
+    echo "  reset         Reset all configuration to defaults"
+    echo "  help          Show this help message"
+    echo ""
+    exit 0
+}
+
+if [ $# -eq 0 ]; then
+    usage
+fi
+
+COMMAND="$1"
+shift
+
+case "$COMMAND" in
+    show)
+        if [ $# -eq 0 ]; then
+            echo "ERROR: KEY required" >&2
+            exit 1
+        fi
+        KEY="$1"
+        if [ -f "${CONFIG_DIR}/${KEY}.conf" ]; then
+            cat "${CONFIG_DIR}/${KEY}.conf"
+        else
+            log "Configuration for '$KEY' not found"
+            exit 1
+        fi
+        ;;
+    set)
+        if [ $# -lt 2 ]; then
+            echo "ERROR: KEY and VALUE required" >&2
+            exit 1
+        fi
+        KEY="$1"
+        VALUE="$2"
+        mkdir -p "$CONFIG_DIR"
+        echo "$VALUE" > "${CONFIG_DIR}/${KEY}.conf"
+        log "Set $KEY to $VALUE"
+        ;;
+    list)
+        if [ -d "$CONFIG_DIR" ]; then
+            for conf in "${CONFIG_DIR}"/*.conf; do
+                [ -f "$conf" ] || continue
+                basename "$conf" .conf
+            done
+        else
+            log "No configuration directory found at $CONFIG_DIR"
+        fi
+        ;;
+    reset)
+        if [ -d "$CONFIG_DIR" ]; then
+            rm -f "${CONFIG_DIR}"/*.conf
+            log "All configuration reset"
+        fi
+        ;;
+    help)
+        usage
+        ;;
+    *)
+        echo "ERROR: Unknown command '$COMMAND'" >&2
+        usage
+        ;;
+esac

@@ -1,4 +1,7 @@
 #!/bin/bash
+# CTX OS System Information
+# Displays system information including OS name, kernel, uptime, shell, and memory usage.
+
 set -euo pipefail
 
 LOGO_PATH="/usr/share/ctxos/ascii-logo.txt"

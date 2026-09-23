@@ -70,6 +70,7 @@ usr/share/ctxos/skel/.config/kdeglobals usr/share/ctxos/skel/.config/
 usr/share/ctxos/skel/.config/user-dirs.dirs usr/share/ctxos/skel/.config/
 usr/share/ctxos/skel/.config/xfce4/ usr/share/ctxos/skel/.config/
 usr/share/ctxos/skel/Templates/* usr/share/ctxos/skel/Templates/
+usr/share/keyrings/ctxos-archive-key.gpg usr/share/keyrings/
 usr/share/ctxos/ascii-logo.txt usr/share/ctxos/
 usr/share/backgrounds/ctxos/* usr/share/backgrounds/ctxos/
 usr/share/plymouth/themes/ctx-pulse/* usr/share/plymouth/themes/ctx-pulse/

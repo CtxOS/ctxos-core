@@ -1,4 +1,8 @@
 #!/bin/bash
+# CTX OS System Update
+# Updates all system packages using the available package manager (apt, dnf, pacman).
+# Logs all update operations to /var/log/ctx-update.log.
+
 set -euo pipefail
 
 CTX_UPDATE_LOG="/var/log/ctx-update.log"
