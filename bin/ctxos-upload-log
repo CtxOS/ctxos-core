@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Upload logs to a paste service for easy sharing
+# Defaults to uploading the Hyprland log, or accepts a file argument
+
+LOG_FILE="${1:-"$HOME/.local/share/hypr/hyprland.log"}"
+
+if [[ ! -f "$LOG_FILE" ]]; then
+  echo "Log file not found: $LOG_FILE"
+  echo "Usage: ctxos-upload-log [log-file]"
+  exit 1
+fi
+
+URL=$(curl -s --upload-file "$LOG_FILE" https://0x0.st)
+
+if [[ -n "$URL" ]]; then
+  echo "Log uploaded: $URL"
+  echo "$URL" | xclip -selection clipboard 2>/dev/null || echo "$URL" | xsel --clipboard --input 2>/dev/null || true
+else
+  echo "Upload failed."
+  exit 1
+fi
