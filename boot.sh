@@ -6,7 +6,7 @@ pacman -Q git &>/dev/null || sudo pacman -Sy --noconfirm --needed git
 
 echo -e "\nCloning Ctxos..."
 rm -rf ~/.local/share/ctxos/
-git clone https://github.com/mdselim606570-cloud/ctxos-core.git ~/.local/share/ctxos >/dev/null
+git clone https://github.com/ctxos/ctxos-core.git ~/.local/share/ctxos >/dev/null
 
 # Use custom branch if instructed
 if [[ -n "$CTXOS_REF" ]]; then

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=ctxos
+Comment=ctxos Project Management
+Exec=chromium --new-window --ozone-platform=wayland --app="https://launchpad.37signals.com" --name=ctxos --class=ctxos
+Terminal=false
+Type=Application
+Icon=ctxos
+Categories=GTK;
+MimeType=text/html;text/xml;application/xhtml_xml;
+StartupNotify=true
