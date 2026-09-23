@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Ensure iwd service will be started
 sudo systemctl enable iwd.service
 

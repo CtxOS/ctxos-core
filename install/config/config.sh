@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Copy over CtxOS configs
 mkdir -p ~/.config
 cp -R ~/.local/share/ctxos/config/* ~/.config/

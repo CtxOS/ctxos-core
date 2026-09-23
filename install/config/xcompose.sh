@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Set default XCompose that is triggered with CapsLock
 tee ~/.XCompose >/dev/null <<EOF
 include "%H/.local/share/ctxos/default/xcompose"

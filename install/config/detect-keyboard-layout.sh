@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # Copy over the keyboard layout that's been set in Arch during install to Hyprland
 conf="/etc/vconsole.conf"
 hyprconf="$HOME/.config/hypr/input.conf"

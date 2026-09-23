@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+# shellcheck source=/etc/conf.d/wireless-regdom
+# shellcheck disable=SC1091
 # First check that wireless-regdb is there
 if [ -f "/etc/conf.d/wireless-regdom" ]; then
   unset WIRELESS_REGDOM
@@ -5,7 +8,7 @@ if [ -f "/etc/conf.d/wireless-regdom" ]; then
 fi
 
 # If the region is already set, we're done
-if [ ! -n "${WIRELESS_REGDOM}" ]; then
+if [[ -z "${WIRELESS_REGDOM}" ]]; then
   # Get the current timezone
   if [ -e "/etc/localtime" ]; then
     TIMEZONE=$(readlink -f /etc/localtime)
@@ -26,7 +29,7 @@ if [ ! -n "${WIRELESS_REGDOM}" ]; then
 
       # Also set it one off now
       if command -v iw &>/dev/null; then
-        sudo iw reg set ${COUNTRY}
+        sudo iw reg set "${COUNTRY}"
       fi
     fi
   fi
