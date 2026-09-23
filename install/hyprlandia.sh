@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 yay -S --noconfirm --needed \
   hyprland hyprshot hyprpicker hyprlock hypridle hyprpolkitagent hyprland-qtutils \
   wofi waybar mako swaybg \

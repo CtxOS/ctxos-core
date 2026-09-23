@@ -1,11 +1,17 @@
+#!/usr/bin/env bash
+
+source "${CTXOS_REPO_DIR:-${HOME}/.local/share/ctxos}/install/lib.sh"
+
+repo_root="$(ctxos_repo_root)"
+
 # Copy over CtxOS configs
-cp -R ~/.local/share/ctxos/config/* ~/.config/
+cp -R "$repo_root/config/"* "$HOME/.config/"
 
 # Ensure application directory exists for update-desktop-database
 mkdir -p ~/.local/share/applications
 
 # Use default bashrc from Ctxos
-echo "source ~/.local/share/ctxos/default/bash/rc" >~/.bashrc
+echo "source $repo_root/default/bash/rc" >~/.bashrc
 
 # Login directly as user, rely on disk encryption + hyprlock for security
 sudo mkdir -p /etc/systemd/system/getty@tty1.service.d

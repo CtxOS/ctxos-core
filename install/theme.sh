@@ -1,3 +1,13 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1091
+source "${CTXOS_REPO_DIR:-${HOME}/.local/share/ctxos}/install/lib.sh"
+
+repo_root="$(ctxos_repo_root)"
+config_root="$(ctxos_config_root)"
+theme_name="tokyo-night"
+theme_dir="$repo_root/themes/$theme_name"
+
 # Use dark mode for QT apps too (like kdenlive)
 sudo pacman -S --noconfirm qt5-style-kvantum
 
@@ -7,21 +17,25 @@ gsettings set org.gnome.desktop.interface gtk-theme "Adwaita-dark"
 gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
 
 # Setup theme links
-mkdir -p ~/.config/ctxos/themes
-for f in ~/.local/share/ctxos/themes/*; do ln -s "$f" ~/.config/ctxos/themes/; done
+ctxos_ensure_dir "$config_root/themes"
+for theme_path in "$repo_root"/themes/*; do
+  [[ -e "$theme_path" ]] || continue
+  ctxos_link_file "$theme_path" "$config_root/themes/$(basename "$theme_path")"
+done
 
 # Set initial theme
-mkdir -p ~/.config/ctxos/current
-ln -snf ~/.config/ctxos/themes/tokyo-night ~/.config/ctxos/current/theme
-source ~/.local/share/ctxos/themes/tokyo-night/backgrounds.sh
-ln -snf ~/.config/ctxos/backgrounds/tokyo-night ~/.config/ctxos/current/backgrounds
-ln -snf ~/.config/ctxos/current/backgrounds/1-Pawel-Czerwinski-Abstract-Purple-Blue.jpg ~/.config/ctxos/current/background
+ctxos_ensure_dir "$config_root/current"
+ctxos_link_dir "$config_root/themes/$theme_name" "$config_root/current/theme"
+source "$theme_dir/backgrounds.sh"
+ctxos_ensure_dir "$config_root/backgrounds"
+ctxos_link_dir "$config_root/backgrounds/$theme_name" "$config_root/current/backgrounds"
+ctxos_link_file "$config_root/current/backgrounds/1-Pawel-Czerwinski-Abstract-Purple-Blue.jpg" "$config_root/current/background"
 
 # Set specific app links for current theme
-ln -snf ~/.config/ctxos/current/theme/hyprlock.conf ~/.config/hypr/hyprlock.conf
-ln -snf ~/.config/ctxos/current/theme/wofi.css ~/.config/wofi/style.css
-ln -snf ~/.config/ctxos/current/theme/neovim.lua ~/.config/nvim/lua/plugins/theme.lua
+ctxos_link_file "$config_root/current/theme/hyprlock.conf" "$HOME/.config/hypr/hyprlock.conf"
+ctxos_link_file "$config_root/current/theme/wofi.css" "$HOME/.config/wofi/style.css"
+ctxos_link_file "$config_root/current/theme/neovim.lua" "$HOME/.config/nvim/lua/plugins/theme.lua"
 mkdir -p ~/.config/btop/themes
-ln -snf ~/.config/ctxos/current/theme/btop.theme ~/.config/btop/themes/current.theme
+ctxos_link_file "$config_root/current/theme/btop.theme" "$HOME/.config/btop/themes/current.theme"
 mkdir -p ~/.config/mako
-ln -snf ~/.config/ctxos/current/theme/mako.ini ~/.config/mako/config
+ctxos_link_file "$config_root/current/theme/mako.ini" "$HOME/.config/mako/config"

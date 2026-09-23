@@ -1,106 +1,34 @@
-name: CTX OS CI
+name: CI
 
 on:
   push:
-    branches: [main, testing]
+    branches:
+      - main
+      - master
   pull_request:
-    branches: [main]
+    branches:
+      - main
+      - master
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
-  lint:
+  lint-and-smoke:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Code
+      - name: Check out repository
         uses: actions/checkout@v4
 
       - name: Install ShellCheck
-        run: sudo apt-get install -y shellcheck
-
-      - name: Run ShellCheck
-        run: |
-          shellcheck bin/ftpsync bin/ftpsync-cron bin/runmirrors bin/rsync-ssl-tunnel \
-            bin/ctx-update bin/ctx-about bin/ctx-dev-setup bin/include-git \
-            bin/archive_release bin/mirror-ctx-images bin/common bin/include-install bin/include-tar
-
-  test:
-    runs-on: ubuntu-latest
-    needs: lint
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y pandoc shellcheck bats-core
-          git clone https://github.com/bats-core/bats-core.git /tmp/bats-core
-          echo "/tmp/bats-core/bin" >> $GITHUB_PATH
+          sudo apt-get install -y shellcheck
 
-      - name: Build Project
-        run: make clean && make all
+      - name: Run shell lint
+        run: make check
 
-      - name: Run BATS Tests
-        run: bats tests/
-
-      - name: Test Summary
-        run: |
-          echo "BATS tests completed"
-          bats tests/ --tap 2>/dev/null | tail -20 || true
-
-  security-scan:
-    runs-on: ubuntu-latest
-    needs: lint
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Install Trivy
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget gnupg
-          wget -qO - https://aquasecurity.github.io/trivy-repo/deb/gpg | sudo apt-key add -
-          echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
-          sudo apt-get update
-          sudo apt-get install -y trivy
-
-      - name: Run Trivy Filesystem Scan
-        run: trivy fs --severity HIGH,CRITICAL --exit-code 1 .
-
-  build-and-deploy:
-    needs: lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Install Build Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y debhelper devscripts reprepro gpg gpg-agent wget dpkg-dev
-
-      - name: Import GPG Key
-        if: env.GPG_PRIVATE_KEY != ''
-        run: |
-          echo "${{ secrets.GPG_PRIVATE_KEY }}" | base64 -d | gpg --import --batch --yes
-          echo "allow-preset-passphrase" >> ~/.gnupg/gpg-agent.conf 2>/dev/null || true
-
-      - name: Build Debian Package
-        run: |
-          chmod +x bin/*.sh debian/rules debian/postinst debian/postrm debian/preinst debian/prerm
-          debuild -us -uc
-          mkdir -p build_assets
-          cp ../ctxos-core*.deb build_assets/ 2>/dev/null || true
-
-      - name: Create Release Artifacts
-        run: |
-          mkdir -p release
-          cp ../ctxos-core*.deb release/ 2>/dev/null || echo "No .deb found"
-          ls -la release/
-
-      - name: Upload Release Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ctxos-packages
-          path: release/
-          retention-days: 30
+      - name: Run smoke tests
+        run: make test

@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Install bluetooth controls
 yay -S --noconfirm --needed blueberry
 
