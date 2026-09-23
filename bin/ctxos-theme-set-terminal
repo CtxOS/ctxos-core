@@ -1,0 +1,7 @@
+#!/bin/bash
+
+THEME="$1"
+ln -sf "$HOME/.local/share/ctxos/themes/$THEME/alacritty.toml" ~/.config/alacritty/alacritty.toml
+pkill alacritty
+setsid alacritty &
+

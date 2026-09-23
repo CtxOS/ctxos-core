@@ -1,0 +1,5 @@
+#!/bin/bash
+
+alacritty --class=presentation --title=presentation --hold -e tmux new-session -d "sudo apt install zoxide -y; exec zsh" 2>/dev/null || \
+alacritty --class=presentation --title=presentation --hold -e bash
+

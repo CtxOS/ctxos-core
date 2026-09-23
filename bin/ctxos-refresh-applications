@@ -1,0 +1,5 @@
+#!/bin/bash
+
+update-desktop-database ~/.local/share/applications
+gtk-update-icon-cache ~/.local/share/icons/hicolor &>/dev/null
+

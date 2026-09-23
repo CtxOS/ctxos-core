@@ -1,0 +1,7 @@
+#!/bin/bash
+
+APP="$1"
+pkill "$APP"
+setsid "$APP" &
+notify-send "Restart" "$APP restarted"
+

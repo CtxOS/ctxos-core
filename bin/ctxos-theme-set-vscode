@@ -1,0 +1,6 @@
+#!/bin/bash
+
+THEME="$1"
+# Update VS Code theme settings
+notify-send "VS Code Theme" "Set to $THEME"
+

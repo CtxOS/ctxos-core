@@ -1,0 +1,4 @@
+#!/bin/bash
+
+git -C ~/.local/share/ctxos branch --show-current
+

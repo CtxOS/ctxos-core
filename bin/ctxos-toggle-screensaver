@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if pgrep hyprlock >/dev/null; then
+  pkill hyprlock
+  notify-send "Screensaver" "Off"
+else
+  hyprlock &
+  notify-send "Screensaver" "On"
+fi
+

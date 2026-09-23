@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cp ~/.local/share/ctxos/config/hypr/hyprlock.conf ~/.config/hypr/hyprlock.conf
+

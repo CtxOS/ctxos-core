@@ -1,0 +1,7 @@
+#!/bin/bash
+
+exec cat <<EOF
+CtxOS - Arch Linux Hyprland Desktop Configuration
+Version: $(git -C ~/.local/share/ctxos describe --tags --always 2>/dev/null || echo "unknown")
+EOF
+

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+WEBAPP="$1"
+if [[ -z "$WEBAPP" ]]; then
+  echo "Usage: ctxos-launch-or-focus-webapp <webapp-name>"
+  exit 1
+fi
+WINDOW_ID=$(hyprctl clients | grep -i "$WEBAPP" | head -1 | awk "{print \\\$1}")
+if [[ -n "$WINDOW_ID" ]]; then
+  hyprctl dispatch focuswindow "$WINDOW_ID"
+else
+  chromium --new-window --ozone-platform=wayland --app="https://$WEBAPP" --class="$WEBAPP" &
+fi
+

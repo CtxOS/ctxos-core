@@ -1,0 +1,6 @@
+#!/bin/bash
+
+sudo systemctl enable --now systemd-resolved
+sudo ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+notify-send "DNS" "systemd-resolved enabled"
+

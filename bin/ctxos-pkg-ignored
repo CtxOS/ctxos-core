@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cat /etc/pacman.conf | grep -A1 "IgnorePkg" | grep -v "^#" | grep -v "^\[" | grep -v "^$"
+

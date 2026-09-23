@@ -1,0 +1,4 @@
+#!/bin/bash
+
+exec grim "$(date +%Y-%m-%d_%H-%M-%S).png"
+

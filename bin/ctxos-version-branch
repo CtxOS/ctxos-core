@@ -1,0 +1,4 @@
+#!/bin/bash
+
+git -C ~/.local/share/ctxos branch --show-current 2>/dev/null || echo "unknown"
+

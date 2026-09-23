@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if pgrep redshift >/dev/null; then
+  pkill redshift
+  notify-send "Nightlight" "Off"
+else
+  redshift &
+  notify-send "Nightlight" "On"
+fi
+

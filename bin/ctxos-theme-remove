@@ -1,0 +1,15 @@
+#!/bin/bash
+
+THEME="$1"
+if [[ -z "$THEME" ]]; then
+  echo "Usage: ctxos-theme-remove <theme-name>"
+  exit 1
+fi
+CURRENT=$(readlink ~/.config/ctxos/current/theme 2>/dev/null)
+if [[ "$CURRENT" == *"$THEME"* ]]; then
+  echo "Cannot remove active theme. Switch first."
+  exit 1
+fi
+rm -rf "$HOME/.local/share/ctxos/themes/$THEME"
+notify-send "Theme" "Removed $THEME"
+

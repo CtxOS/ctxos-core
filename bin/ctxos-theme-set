@@ -1,0 +1,12 @@
+#!/bin/bash
+
+THEME="$1"
+if [[ -z "$THEME" ]]; then
+  echo "Usage: ctxos-theme-set <theme-name>"
+  exit 1
+fi
+ln -nsf "$HOME/.local/share/ctxos/themes/$THEME" "$HOME/.config/ctxos/current/theme"
+ln -nsf "$HOME/.config/ctxos/themes/$THEME" "$HOME/.config/ctxos/current/theme"
+hyprctl reload
+notify-send "Theme" "Set to $THEME"
+

@@ -1,0 +1,8 @@
+#!/bin/bash
+FONT="$1"
+if [[ -z "$FONT" ]]; then
+  echo "Usage: ctxos-font-set <font-name>"
+  exit 1
+fi
+sed -i "s/family = \".*\"/family = \"$FONT\"/" ~/.config/alacritty/alacritty.toml
+notify-send "Font" "Set font to $FONT"

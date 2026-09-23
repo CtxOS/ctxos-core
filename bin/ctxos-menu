@@ -1,0 +1,24 @@
+#!/bin/bash
+
+OPTIONS="Lock
+Sleep
+Restart
+Shutdown
+Terminal
+Browser
+Editor
+Web Apps
+Power"
+SELECTION=$(echo "$OPTIONS" | wofi --show dmenu --prompt "CtxOS Menu" --width 200)
+case "$SELECTION" in
+  Lock) hyprlock ;;
+  Sleep) systemctl suspend ;;
+  Restart) systemctl reboot ;;
+  Shutdown) systemctl poweroff ;;
+  Terminal) alacritty & ;;
+  Browser) chromium --new-window --ozone-platform=wayland & ;;
+  Editor) alacritty -e nvim & ;;
+  "Web Apps") ctxos-webapp-remove ;;
+  Power) ctxos-power-menu ;;
+esac
+

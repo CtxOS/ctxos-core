@@ -1,0 +1,4 @@
+#!/bin/bash
+
+lsblk -o NAME,SIZE,TYPE,MOUNTPOINT | gum choose --header "Select drive"
+

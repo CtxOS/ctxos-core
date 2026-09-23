@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sudo plymouth quit
+sudo systemctl restart plymouth-start
+

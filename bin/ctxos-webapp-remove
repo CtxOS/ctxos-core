@@ -1,0 +1,12 @@
+#!/bin/bash
+
+APP="$1"
+if [[ -z "$APP" ]]; then
+  echo "Usage: ctxos-webapp-remove <app-name>"
+  exit 1
+fi
+rm -f ~/.local/share/applications/"$APP".desktop
+rm -f ~/.local/share/applications/icons/"$APP".png
+update-desktop-database ~/.local/share/applications
+notify-send "Web App" "Removed $APP"
+

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if pgrep waybar >/dev/null; then
+  pkill waybar
+  notify-send "Waybar" "Hidden"
+else
+  setsid waybar &
+  notify-send "Waybar" "Visible"
+fi
+

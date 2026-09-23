@@ -1,0 +1,4 @@
+#!/bin/bash
+
+exec chromium --new-window --ozone-platform=wayland --app="https://zoom.us" --class=zoom
+

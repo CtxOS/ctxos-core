@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cp -R ~/.local/share/ctxos/config/* ~/.config/
+notify-send "CtxOS" "Config refreshed"
+

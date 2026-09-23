@@ -1,0 +1,5 @@
+#!/bin/bash
+
+pkill fcitx5
+setsid fcitx5 &
+

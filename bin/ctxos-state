@@ -1,0 +1,8 @@
+#!/bin/bash
+echo "=== CtxOS State ==="
+echo "Repo: $(git -C ~/.local/share/ctxos branch --show-current 2>/dev/null || echo unknown)"
+echo "Commit: $(git -C ~/.local/share/ctxos log -1 --oneline 2>/dev/null || echo unknown)"
+echo "Theme: $(readlink ~/.config/ctxos/current/theme 2>/dev/null || echo none)"
+echo "Hyprland: $(hyprctl --version 2>/dev/null || echo 'not running')"
+echo "Waybar: $(pgrep -c waybar >/dev/null && echo 'running' || echo 'stopped')"
+echo "Swaybg: $(pgrep -c swaybg >/dev/null && echo 'running' || echo 'stopped')"

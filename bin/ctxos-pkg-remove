@@ -1,0 +1,5 @@
+#!/bin/bash
+
+PACKAGE="$1"
+yay -Rns --noconfirm "$PACKAGE"
+

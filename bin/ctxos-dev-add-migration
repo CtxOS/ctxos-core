@@ -1,0 +1,10 @@
+#!/bin/bash
+
+TIMESTAMP=$(date +%s)
+cat > "migrations/$TIMESTAMP.sh" <<EOF
+#!/usr/bin/env bash
+# Add migration logic here
+EOF
+chmod +x "migrations/$TIMESTAMP.sh"
+echo "Created migration: migrations/$TIMESTAMP.sh"
+

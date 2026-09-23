@@ -1,0 +1,5 @@
+#!/bin/bash
+
+sudo pacman -Syy
+notify-send "Pacman" "Mirrorlist refreshed"
+

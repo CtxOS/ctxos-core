@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cp ~/.local/share/ctxos/config/hypr/hypridle.conf ~/.config/hypr/hypridle.conf
+hyprctl reload
+

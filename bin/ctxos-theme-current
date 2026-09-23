@@ -1,0 +1,4 @@
+#!/bin/bash
+
+readlink ~/.config/ctxos/current/theme 2>/dev/null || echo "No theme selected"
+

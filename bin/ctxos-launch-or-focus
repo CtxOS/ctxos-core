@@ -1,0 +1,11 @@
+#!/bin/bash
+
+WINDOW="$1"
+if [[ -z "$WINDOW" ]]; then
+  echo "Usage: ctxos-launch-or-focus <class>"
+  exit 1
+fi
+hyprctl dispatch exec --class "$WINDOW" "$WINDOW" 2>/dev/null || \
+hyprctl dispatch focuswindow --class "$WINDOW" 2>/dev/null || \
+echo "Window $WINDOW not found"
+
