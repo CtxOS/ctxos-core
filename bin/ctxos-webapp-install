@@ -1,0 +1,21 @@
+#!/bin/bash
+# shellcheck disable=SC1091
+
+# Install a web application as a desktop launcher
+# Uses web2app from default/bash/functions to create a .desktop file
+
+repo_root="$(ctxos_repo_root 2>/dev/null || printf '%s\n' "${HOME}/.local/share/ctxos")"
+source "$repo_root/default/bash/functions"
+
+APP_NAME=$(gum input --placeholder "App name" --prompt "App Name> ")
+APP_URL=$(gum input --placeholder "https://example.com" --prompt "App URL> ")
+APP_ICON=$(gum input --placeholder "https://icon-url.png" --prompt "Icon URL> ")
+
+if [[ -z "$APP_NAME" || -z "$APP_URL" || -z "$APP_ICON" ]]; then
+  echo "All fields are required."
+  exit 1
+fi
+
+web2app "$APP_NAME" "$APP_URL" "$APP_ICON"
+update-desktop-database ~/.local/share/applications
+notify-send "Web App Installed" "$APP_NAME has been installed."
