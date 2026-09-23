@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# ctxos:summary=Wake displays and restore brightness after idle
+# ctxos:group=system
+# ctxos:name=wake
+# ctxos:examples=ctxos system wake
+
+ctxos-brightness-display on
+ctxos-brightness-keyboard restore

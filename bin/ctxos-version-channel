@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# ctxos:summary=Print the active CtxOS mirror and package channel
+
+if grep -q "https://stable-mirror.ctxos.org/" /etc/pacman.d/mirrorlist; then
+  mirror="stable"
+elif grep -q "https://rc-mirror.ctxos.org/" /etc/pacman.d/mirrorlist; then
+  mirror="rc"
+elif grep -q "https://mirror.ctxos.org/" /etc/pacman.d/mirrorlist; then
+  mirror="edge"
+else
+  mirror="unknown"
+fi
+
+if grep -q "https://pkgs.ctxos.org/stable/" /etc/pacman.conf; then
+  pkgs="stable"
+elif grep -q "https://pkgs.ctxos.org/edge/" /etc/pacman.conf; then
+  pkgs="edge"
+elif grep -q "https://pkgs.ctxos.org/rc/" /etc/pacman.conf; then
+  pkgs="rc"
+else
+  pkgs="unknown"
+fi
+
+if [[ $mirror == $pkgs ]]; then
+  echo $mirror
+else
+  echo "$mirror / $pkgs"
+fi

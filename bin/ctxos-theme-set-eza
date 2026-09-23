@@ -1,6 +1,0 @@
-#!/bin/bash
-
-THEME="$1"
-# Update eza theme configuration
-notify-send "eza Theme" "Set to $THEME"
-

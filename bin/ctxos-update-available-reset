@@ -1,5 +1,6 @@
 #!/bin/bash
 
-LAST_UPDATED_AT=$(git -C ~/.local/share/ctxos log -1 --format=%cd --date=unix 2>/dev/null || echo 1)
-echo "Reset update timestamp to $LAST_UPDATED_AT"
+# ctxos:summary=Ensure Waybar icon offering the available update is removed
 
+pkill -RTMIN+7 waybar
+exit 0

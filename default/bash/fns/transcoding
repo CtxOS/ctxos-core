@@ -1,0 +1,33 @@
+# Transcoding helpers have moved to ctxos-transcode.
+
+transcode-video-1080p() {
+  ctxos-transcode "$1" mp4 1080p
+}
+
+transcode-video-4K() {
+  ctxos-transcode "$1" mp4 4k
+}
+
+transcode-video-gif() {
+  ctxos-transcode "$1" gif 1080p
+}
+
+img2jpg() {
+  ctxos-transcode "$1" jpg high
+}
+
+img2jpg-small() {
+  ctxos-transcode "$1" jpg low
+}
+
+img2jpg-medium() {
+  ctxos-transcode "$1" jpg medium
+}
+
+img2jpg-large() {
+  ctxos-transcode "$1" jpg high
+}
+
+img2png() {
+  ctxos-transcode "$1" png high
+}

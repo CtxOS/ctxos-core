@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# ctxos:summary=Reset all CtxOS user configs to the defaults
+# ctxos:requires-sudo=true
+
+set -e
+
+# Overwrite all user configs with the CtxOS defaults.
+
+if (( EUID == 0 )); then
+  echo "Error: This script should not be run as root"
+  exit 1
+fi
+
+echo "Resetting all CtxOS configs"
+cp -R ~/.local/share/ctxos/config/* ~/.config/
+cp ~/.local/share/ctxos/default/bashrc ~/.bashrc
+echo '[[ -f ~/.bashrc ]] && . ~/.bashrc' | tee ~/.bash_profile >/dev/null
+
+$(bash $CTXOS_PATH/install/config/theme.sh)
+
+ctxos-refresh-limine
+ctxos-refresh-plymouth
+ctxos-nvim-setup

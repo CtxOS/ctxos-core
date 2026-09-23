@@ -1,10 +1,13 @@
 #!/bin/bash
 
-if pgrep hypridle >/dev/null; then
-  pkill hypridle
-  notify-send "Idle" "Disabled"
+# ctxos:summary=Toggle hypridle idle locking
+
+if pgrep -x hypridle >/dev/null; then
+  pkill -x hypridle
+  notify-send -u low "󱫖    Stop locking computer when idle"
 else
-  setsid hypridle &
-  notify-send "Idle" "Enabled"
+  uwsm-app -- hypridle >/dev/null 2>&1 &
+  notify-send -u low "󱫖    Now locking computer when idle"
 fi
 
+pkill -RTMIN+9 waybar

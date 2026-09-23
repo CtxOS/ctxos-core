@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pkill hypridle
-setsid hypridle &
+# ctxos:summary=Restart the hypridle service (used for idle detection and auto-lock).
 
+ctxos-restart-app hypridle

@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# ctxos:summary=Overwrite the user tmux config with the CtxOS default and reload tmux.
+
+ctxos-refresh-config tmux/tmux.conf
+ctxos-restart-tmux

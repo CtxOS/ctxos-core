@@ -1,5 +1,6 @@
 #!/bin/bash
 
-pkill hyprsunset
-setsid hyprsunset &
+# ctxos:summary=Overwrite the user config for hyprsunset with the CtxOS default and restart the service.
 
+ctxos-refresh-config hypr/hyprsunset.conf
+ctxos-restart-hyprsunset

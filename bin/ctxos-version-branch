@@ -1,4 +1,5 @@
 #!/bin/bash
 
-git -C ~/.local/share/ctxos branch --show-current 2>/dev/null || echo "unknown"
+# ctxos:summary=Print the current CtxOS git branch
 
+echo $(git -C "$CTXOS_PATH" rev-parse --abbrev-ref HEAD)

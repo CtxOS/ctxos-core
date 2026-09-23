@@ -1,4 +1,0 @@
-#!/bin/bash
-
-exec xdg-open "https://0x0.st" 2>/dev/null || echo "Share service not available"
-

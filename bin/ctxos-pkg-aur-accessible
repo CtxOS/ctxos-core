@@ -1,4 +1,6 @@
 #!/bin/bash
 
-yay -Slq | fzf --multi --preview "yay -Sii {1}" --preview-window=down:75% | xargs -ro yay -S
+# ctxos:summary=Returns true if the AUR is up and available.
 
+curl -sf --connect-timeout 30 --retry 3 --retry-delay 3 -A "ctxos-update" \
+  "https://aur.archlinux.org/rpc/?v=5&type=info&arg=base" >/dev/null

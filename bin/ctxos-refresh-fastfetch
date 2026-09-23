@@ -1,4 +1,5 @@
 #!/bin/bash
 
-cp ~/.local/share/ctxos/config/fastfetch/config.jsonc ~/.config/fastfetch/config.jsonc
+# ctxos:summary=Overwrite the user config for fastfetch with the CtxOS default.
 
+ctxos-refresh-config fastfetch/config.jsonc

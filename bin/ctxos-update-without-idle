@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# ctxos:summary=No-op now that ctxos-update-perform is responsible for idle management.
+# ctxos:hidden=true

@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# ctxos:summary=Set the correct power profile on boot based on current AC/battery state.
+
+if ctxos-battery-present && ! ctxos-ac-present; then
+  ctxos-powerprofiles-set battery
+else
+  ctxos-powerprofiles-set ac
+fi

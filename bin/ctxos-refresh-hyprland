@@ -1,5 +1,11 @@
 #!/bin/bash
 
-cp ~/.local/share/ctxos/config/hypr/hyprland.conf ~/.config/hypr/hyprland.conf
-hyprctl reload
+# ctxos:summary=Overwrite all the user configs in ~/.config/hypr with the CtxOS defaults.
 
+ctxos-refresh-config hypr/autostart.conf
+ctxos-refresh-config hypr/bindings.conf
+ctxos-refresh-config hypr/input.conf
+ctxos-refresh-config hypr/looknfeel.conf
+ctxos-refresh-config hypr/hyprland.conf
+ctxos-refresh-config hypr/monitors.conf
+bash "$CTXOS_PATH/install/config/detect-keyboard-layout.sh"

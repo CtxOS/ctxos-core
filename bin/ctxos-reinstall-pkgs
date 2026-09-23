@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# ctxos:summary=Reinstall all default CtxOS packages from the stable channel
+# ctxos:requires-sudo=true
+
+set -e
+
+# Reinstall all default CtxOS packages from the stable channel and downgrade any packages that are too new.
+
+# Set the package repository to the stable mirrors
+ctxos-refresh-pacman
+
+# Downgrade any packages to the stable setup
+sudo pacman -Suu --noconfirm
+
+# Ensure all packages are installed
+mapfile -t packages < <(grep -v '^#' "$CTXOS_PATH/install/ctxos-base.packages" | grep -v '^$')
+sudo pacman -Syu --noconfirm --needed "${packages[@]}"

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# ctxos:summary=Install Zed Editor and configure it with the current CtxOS theme
+
+echo "Installing Zed Editor..."
+ctxos-pkg-add zed omazed
+
+# Apply CtxOS theme to Zed
+omazed setup
+
+setsid gtk-launch dev.zed.Zed

@@ -1,6 +1,6 @@
+source ~/.local/share/ctxos/default/bash/envs
 source ~/.local/share/ctxos/default/bash/shell
 source ~/.local/share/ctxos/default/bash/aliases
 source ~/.local/share/ctxos/default/bash/functions
-source ~/.local/share/ctxos/default/bash/prompt
 source ~/.local/share/ctxos/default/bash/init
-source ~/.local/share/ctxos/default/bash/envs
+[[ $- == *i* ]] && bind -f ~/.local/share/ctxos/default/bash/inputrc

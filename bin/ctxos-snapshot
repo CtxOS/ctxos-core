@@ -1,12 +1,39 @@
 #!/bin/bash
 
-TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-BACKUP_DIR="$HOME/.local/share/ctxos/backups/$TIMESTAMP"
-mkdir -p "$BACKUP_DIR"
-cp -r ~/.config/hypr "$BACKUP_DIR/" 2>/dev/null
-cp -r ~/.config/alacritty "$BACKUP_DIR/" 2>/dev/null
-cp -r ~/.config/waybar "$BACKUP_DIR/" 2>/dev/null
-cp -r ~/.config/wofi "$BACKUP_DIR/" 2>/dev/null
-cp -r ~/.config/nvim "$BACKUP_DIR/" 2>/dev/null
-echo "Snapshot saved to $BACKUP_DIR"
+# ctxos:summary=Create or restore system snapshots with snapper
+# ctxos:args=<create|restore>
+# ctxos:requires-sudo=true
 
+set -e
+
+COMMAND="$1"
+CTXOS_PATH=${CTXOS_PATH:-$HOME/.local/share/ctxos}
+
+if [[ -z $COMMAND ]]; then
+  echo "Usage: ctxos-snapshot <create|restore>" >&2
+  exit 1
+fi
+
+if ! command -v snapper &>/dev/null; then
+  exit 127 # ctxos-update can use this to just ignore if snapper is not available
+fi
+
+case "$COMMAND" in
+create)
+  DESC="$(ctxos-version)"
+
+  echo -e "\e[32mCreate system snapshot\e[0m"
+
+  # Get existing snapper config names from CSV output
+  mapfile -t CONFIGS < <(sudo snapper --csvout list-configs | awk -F, 'NR>1 {print $1}')
+
+  for config in "${CONFIGS[@]}"; do
+    sudo snapper -c "$config" create -c number -d "$DESC"
+    sudo snapper -c "$config" cleanup number
+  done
+  echo
+  ;;
+restore)
+  sudo limine-snapper-restore
+  ;;
+esac

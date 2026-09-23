@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# ctxos:summary=Reinstall the CtxOS source directory from git
+
+set -e
+
+# Reinstall the CtxOS configuration directory from the git source.
+
+git clone --depth=1 --branch master "https://github.com/ctxos/ctxos.git" ~/.local/share/ctxos-new >/dev/null
+mv $CTXOS_PATH ~/.local/share/ctxos-old
+mv ~/.local/share/ctxos-new $CTXOS_PATH

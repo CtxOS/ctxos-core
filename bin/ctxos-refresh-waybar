@@ -1,9 +1,8 @@
 #!/bin/bash
 
-# Overwrite local waybar settings with the latest in CtxOS
-cp -f ~/.local/share/ctxos/config/waybar/config ~/.config/waybar/ 2>/dev/null
-cp -f ~/.local/share/ctxos/config/waybar/style.css ~/.config/waybar/ 2>/dev/null
+# ctxos:summary=Reset Waybar config to CtxOS defaults
+# ctxos:examples=ctxos refresh waybar
 
-# Restart waybar
-pkill waybar &>/dev/null
-setsid waybar &>/dev/null &
+ctxos-refresh-config waybar/config.jsonc
+ctxos-refresh-config waybar/style.css
+ctxos-restart-waybar

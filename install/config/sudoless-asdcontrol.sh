@@ -1,8 +1,3 @@
-#!/usr/bin/env bash
-
-# Setup sudo-less asdcontrol for Apple Display brightness
-# Assumes asdcontrol is already installed
-if command -v asdcontrol &>/dev/null; then
-  echo "$USER ALL=(ALL) NOPASSWD: /usr/local/bin/asdcontrol" | sudo tee /etc/sudoers.d/asdcontrol >/dev/null
-  sudo chmod 440 /etc/sudoers.d/asdcontrol
-fi
+# Setup sudo-less controls for controlling brightness on Apple Displays
+echo "$USER ALL=(ALL) NOPASSWD: /usr/bin/asdcontrol" | sudo tee /etc/sudoers.d/asdcontrol
+sudo chmod 440 /etc/sudoers.d/asdcontrol

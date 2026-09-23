@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# ctxos:summary=Apply the current theme keyboard color to ASUS ROG keyboards
+# ctxos:hidden=true
+
+ASUSCTL_THEME=~/.config/ctxos/current/theme/keyboard.rgb
+
+if ctxos-cmd-present asusctl; then
+  asusctl aura effect static -c $(sed 's/^#//' $ASUSCTL_THEME)
+fi

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
-
 echo "Add LocalSend as new default application"
-yay -S --noconfirm --needed localsend-bin
+
+ctxos-pkg-drop localsend-bin
+ctxos-pkg-add localsend

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# ctxos:summary=Edit, set, or reset screensaver branding
+# ctxos:group=branding
+# ctxos:name=screensaver
+# ctxos:args=<image|text|reset>
+# ctxos:examples=ctxos branding screensaver image | ctxos branding screensaver text | ctxos branding screensaver reset
+
+set -euo pipefail
+
+case "${1:-}" in
+image)
+  image=$(ctxos-menu-file "Logo image" "$HOME" "svg png")
+  if [[ -n $image ]] && ctxos-transcode-ascii "$image" ~/.config/ctxos/branding/screensaver.txt; then
+    ctxos-launch-screensaver force >/dev/null 2>&1
+  fi
+  ;;
+text)
+  ctxos-launch-editor ~/.config/ctxos/branding/screensaver.txt >/dev/null 2>&1 && ctxos-launch-screensaver force >/dev/null 2>&1
+  ;;
+reset)
+  cp "$CTXOS_PATH/logo.txt" ~/.config/ctxos/branding/screensaver.txt && ctxos-launch-screensaver force >/dev/null 2>&1
+  ;;
+*)
+  echo "Usage: ctxos-branding-screensaver <image|text|reset>" >&2
+  exit 1
+  ;;
+esac

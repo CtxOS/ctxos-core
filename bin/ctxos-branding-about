@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# ctxos:summary=Edit, set, or reset About branding
+# ctxos:group=branding
+# ctxos:name=about
+# ctxos:args=<image|text|reset>
+# ctxos:examples=ctxos branding about image | ctxos branding about text | ctxos branding about reset
+
+set -euo pipefail
+
+case "${1:-}" in
+image)
+  image=$(ctxos-menu-file "Logo image" "$HOME" "svg png")
+  if [[ -n $image ]] && ctxos-transcode-ascii "$image" ~/.config/ctxos/branding/about.txt --width 54 --height 26 --mode block; then
+    ctxos-launch-about >/dev/null 2>&1
+  fi
+  ;;
+text)
+  ctxos-launch-editor ~/.config/ctxos/branding/about.txt >/dev/null 2>&1 && ctxos-launch-about >/dev/null 2>&1
+  ;;
+reset)
+  cp "$CTXOS_PATH/icon.txt" ~/.config/ctxos/branding/about.txt && ctxos-launch-about >/dev/null 2>&1
+  ;;
+*)
+  echo "Usage: ctxos-branding-about <image|text|reset>" >&2
+  exit 1
+  ;;
+esac

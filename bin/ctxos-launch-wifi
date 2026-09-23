@@ -1,4 +1,6 @@
 #!/bin/bash
 
-exec nmtui
+# ctxos:summary=Launch the CtxOS wifi controls (provided by the Impala TUI).
 
+rfkill unblock wifi
+ctxos-launch-or-focus-tui impala

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# ctxos:summary=Open Voxtype AI model setup
+
+set -e
+
+ctxos-launch-floating-terminal-with-presentation "voxtype setup model"
+ctxos-restart-waybar

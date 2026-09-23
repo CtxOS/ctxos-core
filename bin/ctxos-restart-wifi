@@ -1,5 +1,7 @@
 #!/bin/bash
 
-sudo systemctl restart NetworkManager
-notify-send "WiFi" "NetworkManager restarted"
+# ctxos:summary=Unblock and restart the Wi-Fi service.
 
+echo -e "Unblocking wifi...\n"
+rfkill unblock wifi
+rfkill list wifi

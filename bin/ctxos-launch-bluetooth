@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# ctxos:summary=Launch the CtxOS bluetooth controls TUI (provided by bluetui).
+
+rfkill unblock bluetooth
+exec ctxos-launch-or-focus-tui bluetui

@@ -1,15 +1,36 @@
 #!/bin/bash
 
-THEME="$1"
-if [[ -z "$THEME" ]]; then
-  echo "Usage: ctxos-theme-remove <theme-name>"
-  exit 1
-fi
-CURRENT=$(readlink ~/.config/ctxos/current/theme 2>/dev/null)
-if [[ "$CURRENT" == *"$THEME"* ]]; then
-  echo "Cannot remove active theme. Switch first."
-  exit 1
-fi
-rm -rf "$HOME/.local/share/ctxos/themes/$THEME"
-notify-send "Theme" "Removed $THEME"
+# ctxos:summary=Remove a user-installed theme
+# ctxos:args=[theme-name]
+# ctxos:examples=ctxos theme remove "Tokyo Night"
 
+if [[ -z $1 ]]; then
+  mapfile -t extra_themes < <(find ~/.config/ctxos/themes -mindepth 1 -maxdepth 1 -type d ! -xtype l -printf '%f\n')
+
+  if (( ${#extra_themes[@]} > 0 )); then
+    THEME_NAME=$(printf '%s\n' "${extra_themes[@]}" | sort | gum choose --header="Remove extra theme")
+  else
+    echo "No extra themes installed."
+    exit 1
+  fi
+else
+  THEME_NAME="$1"
+fi
+
+THEMES_DIR="$HOME/.config/ctxos/themes"
+CURRENT_DIR="$HOME/.config/ctxos/current"
+THEME_PATH="$THEMES_DIR/$THEME_NAME"
+
+# Ensure a theme was set
+if [[ -z $THEME_NAME ]]; then
+  exit 1
+fi
+
+# Check if theme exists before attempting removal
+if [[ ! -d $THEME_PATH ]]; then
+  echo "Error: Theme '$THEME_NAME' not found."
+  exit 1
+fi
+
+# Now remove the theme directory for THEME_NAME
+rm -rf "$THEME_PATH"

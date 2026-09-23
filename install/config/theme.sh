@@ -1,9 +1,24 @@
-#!/usr/bin/env bash
+# Set links for Nautilus action icons
+sudo ln -snf /usr/share/icons/Adwaita/symbolic/actions/go-previous-symbolic.svg /usr/share/icons/Yaru/scalable/actions/go-previous-symbolic.svg
+sudo ln -snf /usr/share/icons/Adwaita/symbolic/actions/go-next-symbolic.svg /usr/share/icons/Yaru/scalable/actions/go-next-symbolic.svg
 
-# Apply CtxOS theme configuration
-run_logged "$CTXOS_INSTALL/config/theme.sh"
+# Setup user theme folder
+mkdir -p ~/.config/ctxos/themes
 
-# Set default theme if not already set
-if [[ ! -L "$HOME/.config/ctxos/current/theme" ]]; then
-  ln -s "$CTXOS_INSTALL/../themes/tokyo-night" "$HOME/.config/ctxos/current/theme"
-fi
+# Chromium policy directory for theme
+sudo mkdir -p /etc/chromium/policies/managed
+sudo chmod a+rw /etc/chromium/policies/managed
+
+# Set initial theme
+ctxos-theme-set "Tokyo Night"
+rm -rf ~/.config/chromium/SingletonLock # otherwise archiso will own the chromium singleton
+
+# Set specific app links for current theme
+mkdir -p ~/.config/btop/themes
+ln -snf ~/.config/ctxos/current/theme/btop.theme ~/.config/btop/themes/current.theme
+
+mkdir -p ~/.config/mako
+ln -snf ~/.config/ctxos/current/theme/mako.ini ~/.config/mako/config
+
+# Default Chromium to follow system appearance ("device") instead of dark
+echo '{"browser":{"theme":{"color_scheme":0,"color_scheme2":0}}}' | sudo tee /usr/lib/chromium/initial_preferences >/dev/null

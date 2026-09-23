@@ -1,11 +1,19 @@
 #!/bin/bash
 
-WINDOW="$1"
-if [[ -z "$WINDOW" ]]; then
-  echo "Usage: ctxos-launch-or-focus <class>"
+# ctxos:summary=Launch an app or focus an existing window matching a pattern
+# ctxos:args=<window-pattern> <launch-command>
+
+if (($# == 0)); then
+  echo "Usage: ctxos-launch-or-focus [window-pattern] [launch-command]"
   exit 1
 fi
-hyprctl dispatch exec --class "$WINDOW" "$WINDOW" 2>/dev/null || \
-hyprctl dispatch focuswindow --class "$WINDOW" 2>/dev/null || \
-echo "Window $WINDOW not found"
 
+WINDOW_PATTERN="$1"
+LAUNCH_COMMAND="${2:-"uwsm-app -- $WINDOW_PATTERN"}"
+WINDOW_ADDRESS=$(hyprctl clients -j | jq -r --arg p "$WINDOW_PATTERN" '.[]|select((.class|test("\\b" + $p + "\\b";"i")) or (.title|test("\\b" + $p + "\\b";"i")))|.address' | head -n1)
+
+if [[ -n $WINDOW_ADDRESS ]]; then
+  hyprctl dispatch focuswindow "address:$WINDOW_ADDRESS"
+else
+  eval exec setsid $LAUNCH_COMMAND
+fi

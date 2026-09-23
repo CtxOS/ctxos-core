@@ -1,7 +1,5 @@
-#!/usr/bin/env bash
-
-# Enable Bluetooth and ensure it starts on boot
+# Turn on bluetooth by default
 chrootable_systemctl_enable bluetooth.service
 
-# Ensure Bluetooth is active
-sudo systemctl start bluetooth.service
+mkdir -p ~/.config/wireplumber/wireplumber.conf.d/
+cp "$CTXOS_PATH/default/wireplumber/wireplumber.conf.d/bluetooth-a2dp-autoconnect.conf" ~/.config/wireplumber/wireplumber.conf.d/

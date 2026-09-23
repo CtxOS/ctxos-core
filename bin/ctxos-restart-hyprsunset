@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pkill hyprsunset
-setsid hyprsunset &
+# ctxos:summary=Restart the hyprsunset service (used for blue light filtering/night light).
 
+ctxos-restart-app hyprsunset

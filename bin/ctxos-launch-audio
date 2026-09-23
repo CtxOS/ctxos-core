@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# ctxos:summary=Launch the CtxOS audio controls TUI (provided by wiremix).
+
+ctxos-launch-or-focus-tui wiremix

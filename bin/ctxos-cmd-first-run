@@ -1,7 +1,0 @@
-#!/bin/bash
-
-for f in "$HOME/.local/share/ctxos/install/first-run/"*.sh; do
-  source "$f"
-done
-notify-send "CtxOS" "First run setup complete"
-

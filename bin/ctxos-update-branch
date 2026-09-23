@@ -1,4 +1,36 @@
 #!/bin/bash
 
-git -C ~/.local/share/ctxos branch --show-current
+# ctxos:summary=Switch CtxOS branches and update from the selected branch
+# ctxos:args=<branch>
 
+set -e
+
+if (($# == 0)); then
+  echo "Usage: ctxos-update-branch [master|dev]"
+  exit 1
+fi
+
+branch="$1"
+
+# Snapshot before switching branch
+ctxos-snapshot create || (( $? == 127 ))
+
+if ! git -C "$CTXOS_PATH" diff --quiet || ! git -C "$CTXOS_PATH" diff --cached --quiet; then
+  stashed=true
+  git -C "$CTXOS_PATH" stash push -u -m "Autostash before switching to $branch"
+else
+  stashed=false
+fi
+
+# Switch branches
+git -C "$CTXOS_PATH" switch "$branch"
+
+# Reapply stash if we made one
+if [[ $stashed == "true" ]]; then
+  if ! git -C "$CTXOS_PATH" stash pop; then
+    echo "⚠️ Conflicts when applying stash — stash kept"
+  fi
+fi
+
+# Update the system from the new branch
+ctxos-update-perform

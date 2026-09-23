@@ -1,9 +1,9 @@
 #!/bin/bash
 
-echo "  ███╗   ██╗ █████╗ ████████╗███████╗██████╗ "
-echo "  ████╗  ██║██╔══██╗╚══██╔══╝██╔════╝██╔══██╗"
-echo "  ██╔██╗ ██║███████║   ██║   █████╗  ██████╔╝"
-echo "  ██║╚██╗██║██╔══██║   ██║   ██╔══╝  ██╔══██╗"
-echo "  ██║ ╚████║██║  ██║   ██║   ███████╗██║  ██║"
-echo "  ╚═╝  ╚═══╝╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝"
+# ctxos:summary=Display the CtxOS logo in the terminal using green color.
 
+clear
+echo -e "\033[32m"
+cat <~/.local/share/ctxos/logo.txt
+echo -e "\033[0m"
+echo

@@ -1,5 +1,0 @@
-#!/bin/bash
-
-yay -S --noconfirm --needed libfido2
-notify-send "FIDO2" "FIDO2 support installed"
-

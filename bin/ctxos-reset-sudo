@@ -1,6 +1,0 @@
-#!/bin/bash
-
-sudo chmod 440 /etc/sudoers
-sudo visudo -c
-notify-send "Sudo" "Sudo permissions reset"
-

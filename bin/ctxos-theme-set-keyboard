@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# ctxos:summary=Apply the current theme keyboard color to supported keyboards
+# ctxos:hidden=true
+
+ctxos-theme-set-keyboard-asus-rog
+ctxos-theme-set-keyboard-f16

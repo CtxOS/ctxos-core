@@ -1,5 +1,7 @@
 #!/bin/bash
 
-sudo systemctl restart bluetooth.service
-notify-send "Bluetooth" "Restarted"
+# ctxos:summary=Unblock and restart the bluetooth service.
 
+echo -e "Unblocking bluetooth...\n"
+rfkill unblock bluetooth
+rfkill list bluetooth

@@ -1,4 +1,5 @@
 #!/bin/bash
 
-git -C ~/.local/share/ctxos describe --tags --always 2>/dev/null || echo "unknown"
+# ctxos:summary=Print the installed CtxOS version
 
+cat $CTXOS_PATH/version

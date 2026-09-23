@@ -1,9 +1,13 @@
 #!/bin/bash
 
-APP_NAME="$1"
-if [[ -z "$APP_NAME" ]]; then
-  echo "Usage: ctxos-launch-webapp <app-name>"
-  exit 1
-fi
-exec chromium --new-window --ozone-platform=wayland --app="https://$APP_NAME" --name="$APP_NAME" --class="$APP_NAME"
+# ctxos:summary=Launch a URL as a web app in the default supported browser
+# ctxos:args=<url>
 
+browser=$(xdg-settings get default-web-browser)
+
+case $browser in
+google-chrome* | brave* | microsoft-edge* | opera* | vivaldi* | helium*) ;;
+*) browser="chromium.desktop" ;;
+esac
+
+exec setsid uwsm-app -- $(sed -n 's/^Exec=\([^ ]*\).*/\1/p' {~/.local,~/.nix-profile,/usr}/share/applications/$browser 2>/dev/null | head -1) --app="$1" "${@:2}"

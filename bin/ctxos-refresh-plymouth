@@ -1,5 +1,13 @@
 #!/bin/bash
 
-sudo plymouth quit
-sudo systemctl restart plymouth-start
+# ctxos:summary=Overwrite the user config for the Plymouth drive decryption and boot sequence with the CtxOS default and rebuild it.
+# ctxos:requires-sudo=true
 
+sudo cp -r ~/.local/share/ctxos/default/plymouth/* /usr/share/plymouth/themes/ctxos/
+sudo plymouth-set-default-theme ctxos
+
+if command -v limine-mkinitcpio &>/dev/null; then
+  sudo limine-mkinitcpio
+else
+  sudo mkinitcpio -P
+fi

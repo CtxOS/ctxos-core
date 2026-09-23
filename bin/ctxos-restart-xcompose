@@ -1,5 +1,5 @@
 #!/bin/bash
 
-pkill fcitx5
-setsid fcitx5 &
+# ctxos:summary=Restart the XCompose input method service (fcitx5) to apply new compose key settings.
 
+ctxos-restart-app fcitx5 --disable notificationitem

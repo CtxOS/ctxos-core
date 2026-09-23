@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# ctxos:summary=Reload hyprland configuration (used by the CtxOS theme switching).
+
+hyprctl reload >/dev/null

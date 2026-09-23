@@ -1,4 +1,5 @@
 #!/bin/bash
 
-cp ~/.local/share/ctxos/config/hypr/hyprlock.conf ~/.config/hypr/hyprlock.conf
+# ctxos:summary=Overwrite the user config for hyprlock with the CtxOS default.
 
+ctxos-refresh-config hypr/hyprlock.conf

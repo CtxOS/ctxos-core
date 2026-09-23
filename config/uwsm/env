@@ -1,0 +1,11 @@
+# Changes require a restart to take effect.
+
+# Ensure CtxOS bins are in the path
+export CTXOS_PATH=$HOME/.local/share/ctxos
+export PATH=$CTXOS_PATH/bin:$PATH:$HOME/.local/bin
+
+# Set default terminal and editor
+source ~/.config/uwsm/default
+
+# Activate mise if present on the system
+ctxos-cmd-present mise && eval "$(mise activate bash --shims)"

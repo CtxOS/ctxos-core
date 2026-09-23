@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# ctxos:summary=Refresh the SDDM theme from default
+# ctxos:requires-sudo=true
+
+sudo rm -rf /usr/share/sddm/themes/ctxos
+sudo cp -r $CTXOS_PATH/default/sddm/ctxos /usr/share/sddm/themes/ctxos

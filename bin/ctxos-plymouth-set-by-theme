@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# ctxos:summary=Set the Plymouth boot theme from an CtxOS theme
+# ctxos:args=<theme-name>
+# ctxos:requires-sudo=true
+
+# Resolve a theme by name and apply its unlock.png + colors.toml as the
+# Plymouth boot screen via ctxos-plymouth-set.
+
+if [[ $# -ne 1 ]]; then
+  echo "Usage: ctxos-plymouth-set-by-theme <theme-name>" >&2
+  exit 1
+fi
+
+theme=$1
+
+if [[ -d ~/.config/ctxos/themes/$theme ]]; then
+  theme_dir=~/.config/ctxos/themes/$theme
+else
+  theme_dir="$CTXOS_PATH/themes/$theme"
+fi
+
+bg=$(awk -F'"' '/^background/{print $2}' "$theme_dir/colors.toml")
+text=$(awk -F'"' '/^foreground/{print $2}' "$theme_dir/colors.toml")
+
+exec ctxos-plymouth-set "$bg" "$text" "$theme_dir/unlock.png"

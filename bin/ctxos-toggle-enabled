@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# ctxos:summary=Check if a toggle is enabled (flag file exists)
+# ctxos:args=<flag-name>
+
+[[ -f "$HOME/.local/state/ctxos/toggles/$1" ]]

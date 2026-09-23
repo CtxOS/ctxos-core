@@ -1,36 +1,47 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-ascii_art=''
+set -e
 
-set -euo pipefail
+# Set install mode to online since boot.sh is used for curl installations
+export CTXOS_ONLINE_INSTALL=true
 
-echo -e "\n$ascii_art\n"
+ansi_art='                 ▄▄▄
+   ██████╗████████╗██╗  ██╗ ██████╗ ███████╗
+  ██╔════╝╚══██╔══╝╚██╗██╔╝██╔═══██╗██╔════╝
+  ██║        ██║    ╚███╔╝ ██║   ██║███████╗
+  ██║        ██║    ██╔██╗ ██║   ██║╚════██║
+  ╚██████╗   ██║   ██╔╝ ██╗╚██████╔╝███████║
+   ╚═════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝ ╚══════╝
 
-if ! command -v pacman >/dev/null 2>&1; then
-  echo "CtxOS bootstrapping requires Arch Linux with pacman installed."
-  exit 1
+              CtxOS'
+
+clear
+echo -e "\n$ansi_art\n"
+
+# Use custom branch if instructed, otherwise default to master
+CTXOS_REF="${CTXOS_REF:-master}"
+
+# Set mirror based on branch
+if [[ $CTXOS_REF == "dev" ]]; then
+  export CTXOS_MIRROR=edge
+  echo 'Server = https://mirror.ctxos.org/$repo/os/$arch' | sudo tee /etc/pacman.d/mirrorlist >/dev/null
+elif [[ $CTXOS_REF == "rc" ]]; then
+  export CTXOS_MIRROR=rc
+  echo 'Server = https://rc-mirror.ctxos.org/$repo/os/$arch' | sudo tee /etc/pacman.d/mirrorlist >/dev/null
+else
+  export CTXOS_MIRROR=stable
+  echo 'Server = https://stable-mirror.ctxos.org/$repo/os/$arch' | sudo tee /etc/pacman.d/mirrorlist >/dev/null
 fi
 
-pacman -Q git &>/dev/null || sudo pacman -Sy --noconfirm --needed git
+sudo pacman -Syu --noconfirm --needed git
 
-repo_dir="${CTXOS_REPO_DIR:-$HOME/.local/share/ctxos}"
+# Use custom repo if specified, otherwise default to ctxos/ctxos-core
+CTXOS_REPO="${CTXOS_REPO:-ctxos/ctxos-core}"
 
-echo -e "\nCloning CtxOS into $repo_dir..."
-rm -rf "$repo_dir"
-git clone https://github.com/ctxos/ctxos-core.git "$repo_dir" >/dev/null
+echo -e "\nCloning CtxOS from: https://github.com/${CTXOS_REPO}.git"
+echo -e "\e[32mUsing branch: $CTXOS_REF\e[0m"
+rm -rf ~/.local/share/ctxos/
+git clone --branch "$CTXOS_REF" "https://github.com/${CTXOS_REPO}.git" ~/.local/share/ctxos >/dev/null
 
-# Use custom branch if instructed
-if [[ -n "$CTXOS_REF" ]]; then
-  echo -e "\eUsing branch: $CTXOS_REF"
-  cd "$repo_dir"
-  git fetch origin "${CTXOS_REF}" && git checkout "${CTXOS_REF}"
-  cd -
-fi
-
-echo -e "\nBootstrap complete."
-echo -e "Next step: cd $repo_dir && make install"
-
-if [[ "${CTXOS_RUN_INSTALL:-0}" == "1" ]]; then
-  echo -e "\nRunning install flow..."
-  source "$repo_dir/install.sh"
-fi
+echo -e "\nInstallation starting..."
+source ~/.local/share/ctxos/install.sh
