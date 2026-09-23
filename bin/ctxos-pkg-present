@@ -4,7 +4,9 @@
 # ctxos:args=<packages...>
 
 for pkg in "$@"; do
-  pacman -Q "$pkg" &>/dev/null || exit 1
+  if ! dpkg -s "$pkg" &>/dev/null; then
+    exit 1
+  fi
 done
 
 exit 0

@@ -1,17 +1,18 @@
 if [[ -n ${CTXOS_ONLINE_INSTALL:-} ]]; then
   # Install build tools
-  ctxos-pkg-add base-devel
+  ctxos-pkg-add base
 
-  # Configure pacman
-  sudo cp -f ~/.local/share/ctxos/default/pacman/pacman-${CTXOS_MIRROR:-stable}.conf /etc/pacman.conf
-  sudo cp -f ~/.local/share/ctxos/default/pacman/mirrorlist-${CTXOS_MIRROR:-stable} /etc/pacman.d/mirrorlist
+  # Configure apt sources
+  sudo cp -f ~/.local/share/ctxos/default/pacman/pacman-${CTXOS_MIRROR:-stable}.conf /etc/apt/sources.list.d/ctxos-sources.list
 
-  sudo pacman-key --recv-keys 40DFB630FF42BCFFB047046CF0134EE680CAC571 --keyserver keys.openpgp.org
-  sudo pacman-key --lsign-key 40DFB630FF42BCFFB047046CF0134EE680CAC571
+  # Update apt cache
+  sudo apt-get update
 
-  sudo pacman -Sy
-  ctxos-pkg-add ctxos-keyring
+  # Install ctxos keyring if available
+  if [[ -f ~/.local/share/ctxos/default/pacman/ctxos-keyring ]]; then
+    sudo cp -f ~/.local/share/ctxos/default/pacman/ctxos-keyring /etc/apt/trusted.g.d/ctxos.gpg
+  fi
 
   # Refresh all repos
-  sudo pacman -Syyuu --noconfirm
+  sudo apt-get update
 fi
