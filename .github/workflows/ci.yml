@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+
+jobs:
+  install-check:
+    name: Install syntax
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate install scripts parse
+        shell: bash
+        run: |
+          set -euo pipefail
+          bash -n install.sh
+          bash -n boot.sh
+          find install -type f -name '*.sh' -print0 | while IFS= read -r -d '' file; do
+            bash -n "$file"
+          done
+
+  build-check:
+    name: Build validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Validate CLI and config scripts parse
+        shell: bash
+        run: |
+          set -euo pipefail
+          find bin -maxdepth 1 -type f -perm /111 -print0 | while IFS= read -r -d '' file; do
+            bash -n "$file"
+          done
+          find config -type f -name '*.sh' -print0 | while IFS= read -r -d '' file; do
+            bash -n "$file"
+          done
+
+  test:
+    name: CLI test suite
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install jq
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y jq
+
+      - name: Run project test suite
+        shell: bash
+        run: |
+          set -euo pipefail
+          chmod +x test/ctxos-cli-test.sh
+          bash test/ctxos-cli-test.sh

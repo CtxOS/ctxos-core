@@ -1,0 +1,115 @@
+#!/bin/bash
+
+# ctxos:summary=Install Docker with cross-platform support
+# ctxos:args=[linux|macos|windows|wsl|auto]
+# ctxos:examples=ctxos install docker | ctxos install docker linux
+# ctxos:requires-sudo=true
+
+install_linux_docker() {
+  echo "Installing Docker for Linux..."
+
+  if ! ctxos-pkg-present docker 2>/dev/null; then
+    ctxos-pkg-add docker docker-buildx docker-compose || return 1
+  fi
+
+  if [[ -d /etc/systemd/system ]]; then
+    sudo mkdir -p /etc/docker
+    sudo tee /etc/docker/daemon.json >/dev/null <<'EOF'
+{
+    "log-driver": "json-file",
+    "log-opts": { "max-size": "10m", "max-file": "5" },
+    "dns": ["172.17.0.1"],
+    "bip": "172.17.0.1/16"
+}
+EOF
+
+    sudo mkdir -p /etc/systemd/resolved.conf.d
+    echo -e '[Resolve]\nDNSStubListenerExtra=172.17.0.1' | sudo tee /etc/systemd/resolved.conf.d/20-docker-dns.conf >/dev/null
+
+    sudo systemctl enable docker.socket
+    sudo systemctl enable docker.service 2>/dev/null || true
+    sudo systemctl daemon-reload
+    sudo systemctl restart systemd-resolved 2>/dev/null || true
+
+    if id -nG "$(id -un)" | tr ' ' '\n' | grep -qx "docker"; then
+      echo "Docker group already configured for this user."
+    else
+      sudo usermod -aG docker "$(id -un)"
+      echo "Added $(id -un) to the docker group. Log out and back in to use Docker without sudo."
+    fi
+
+    sudo systemctl start docker 2>/dev/null || true
+  else
+    echo "systemd is not available. Docker was installed but must be started manually on this host."
+  fi
+
+  echo "Docker install complete."
+  echo "Examples: docker run hello-world"
+}
+
+install_macos_docker() {
+  if command -v brew >/dev/null 2>&1; then
+    echo "Installing Docker Desktop via Homebrew..."
+    brew install --cask docker || return 1
+    echo "Docker Desktop has been installed. Open the Docker app and sign in if prompted."
+    return 0
+  fi
+
+  echo "Docker Desktop is required on macOS. Install Homebrew first, then run:"
+  echo "  brew install --cask docker"
+  return 1
+}
+
+install_windows_docker() {
+  if command -v winget >/dev/null 2>&1; then
+    echo "Installing Docker Desktop via winget..."
+    winget install --id Docker.DockerDesktop -e || return 1
+    echo "Docker Desktop has been installed. Launch it once to initialize the engine."
+    return 0
+  fi
+
+  echo "Docker Desktop is required on Windows. Install it from:"
+  echo "  https://www.docker.com/products/docker-desktop/"
+  return 1
+}
+
+install_wsl_docker() {
+  echo "WSL Docker setup requires the Docker engine inside the WSL distro."
+  echo "Install it with:"
+  echo "  sudo apt-get update"
+  echo "  sudo apt-get install -y docker.io docker-buildx docker-compose-plugin"
+  echo "Then start the daemon with:"
+  echo "  sudo service docker start"
+}
+
+platform="${1:-auto}"
+
+case "$platform" in
+  auto)
+    case "$(uname -s)" in
+      Linux) install_linux_docker ;;
+      Darwin) install_macos_docker ;;
+      MINGW*|MSYS*|CYGWIN*) install_windows_docker ;;
+      *)
+        echo "Unsupported platform for Docker installation: $(uname -s)" >&2
+        exit 1
+        ;;
+    esac
+    ;;
+  linux)
+    install_linux_docker
+    ;;
+  macos|darwin)
+    install_macos_docker
+    ;;
+  windows|win)
+    install_windows_docker
+    ;;
+  wsl)
+    install_wsl_docker
+    ;;
+  *)
+    echo "Usage: ctxos install docker [linux|macos|windows|wsl|auto]" >&2
+    exit 1
+    ;;
+esac

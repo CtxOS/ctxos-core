@@ -1,3 +1,16 @@
+# Configure Docker daemon when running on Linux hosts with systemd.
+# This is intentionally guarded so Docker support can be installed on
+# non-Linux or non-systemd environments without failing the rest of setup.
+if [[ "$(uname -s)" != "Linux" ]]; then
+  echo "Docker config skipped: host is not Linux."
+  return 0
+fi
+
+if ! command -v systemctl >/dev/null 2>&1; then
+  echo "Docker config skipped: systemd is not available on this host."
+  return 0
+fi
+
 # Configure Docker daemon:
 # - limit log size to avoid running out of disk
 # - use host's DNS resolver
@@ -14,13 +27,13 @@ EOF
 # Expose systemd-resolved to our Docker network
 sudo mkdir -p /etc/systemd/resolved.conf.d
 echo -e '[Resolve]\nDNSStubListenerExtra=172.17.0.1' | sudo tee /etc/systemd/resolved.conf.d/20-docker-dns.conf >/dev/null
-sudo systemctl restart systemd-resolved
+sudo systemctl restart systemd-resolved 2>/dev/null || true
 
 # Start Docker on-demand
-sudo systemctl enable docker.socket
+sudo systemctl enable docker.socket 2>/dev/null || true
 
 # Give this user privileged Docker access
-sudo usermod -aG docker ${USER}
+sudo usermod -aG docker "${USER}"
 
 # Prevent Docker from preventing boot for network-online.target
 sudo mkdir -p /etc/systemd/system/docker.service.d
